@@ -32,9 +32,9 @@ function App() {
       .then((newCard) => {
         setCards([newCard, ...cards]);
         setIsAddPlacePopupOpen(false);
-        setIsLoading(false);
       })
-      .catch((e) => console.log(e));
+      .catch((e) => console.log(e))
+      .finally(() => setIsLoading(false));
   };
 
   //  Лайк
@@ -87,13 +87,15 @@ function App() {
 
   // Обновить инфо
   const handleUpdateUser = (data) => {
+    setIsLoading(true);
     api
       .changeUserInfo(data)
       .then((data) => {
         setCurrentUser(data);
         setIsEditProfilePopupOpen(false);
       })
-      .catch((e) => console.log(e));
+      .catch((e) => console.log(e))
+      .finally(() => setIsLoading(false));
   };
   // Обновить аватар
   const handleUpdateAvatar = (data) => {
@@ -113,6 +115,7 @@ function App() {
           <ImagePopup card={selectedCard} close={closeAllPopups} />
         )}
         <EditProfilePopup
+          isLoading={isLoading}
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}

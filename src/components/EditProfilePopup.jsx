@@ -2,7 +2,7 @@ import PopupWithForm from "./PopupWithForm";
 import { useState, useEffect, useContext } from "react";
 
 import UserContext from "../contexts/CurrentUserContext";
-const EditProfilePopup = ({ isOpen, onClose, onUpdateUser }) => {
+const EditProfilePopup = ({ isOpen, onClose, onUpdateUser, isLoading }) => {
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const userInfo = useContext(UserContext);
@@ -10,7 +10,7 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser }) => {
   useEffect(() => {
     setName(userInfo.name);
     setDesc(userInfo.about);
-  }, [userInfo]);
+  }, [userInfo, isOpen]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -22,6 +22,7 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser }) => {
 
   return (
     <PopupWithForm
+      isLoading={isLoading}
       isOpen={isOpen}
       onClose={onClose}
       name="main"
@@ -29,7 +30,7 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser }) => {
       onSubmit={handleSubmit}
     >
       <input
-        value={name}
+        value={name || ""}
         name="name"
         type="text"
         className="popup__input popup__input_type_name"
@@ -42,7 +43,7 @@ const EditProfilePopup = ({ isOpen, onClose, onUpdateUser }) => {
       />
       <span className="name-error popup__input-error"></span>
       <input
-        value={desc}
+        value={desc || ""}
         name="about"
         type="text"
         className="popup__input popup__input_type_bio"

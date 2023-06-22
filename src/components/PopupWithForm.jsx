@@ -28,7 +28,7 @@ const PopupWithForm = ({
           onSubmit={onSubmit}
         >
           {children}
-          <button type="submit" className="popup__button">
+          <button disabled={isLoading} type="submit" className="popup__button">
             {isLoading ? "Сохраняю.." : "Сохранить"}
           </button>
         </form>

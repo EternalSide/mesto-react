@@ -1,10 +1,15 @@
 import PopupWithForm from "./PopupWithForm";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 const AddPlacePopup = ({ onClose, isAddPlacePopupOpen, onAddPlace, isLoading }) => {
   const [cardInfo, setCardInfo] = useState({
     name: "",
     link: "",
   });
+
+  useEffect(() => {
+    setCardInfo({ name: "", link: "" });
+  }, [isAddPlacePopupOpen]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     return onAddPlace(cardInfo);
@@ -19,6 +24,7 @@ const AddPlacePopup = ({ onClose, isAddPlacePopupOpen, onAddPlace, isLoading }) 
       onSubmit={handleSubmit}
     >
       <input
+        value={cardInfo.name}
         id="name-input"
         name="name"
         type="text"
@@ -37,6 +43,7 @@ const AddPlacePopup = ({ onClose, isAddPlacePopupOpen, onAddPlace, isLoading }) 
       <span className="name-input-error popup__input-error"></span>
 
       <input
+        value={cardInfo.link}
         id="email-input"
         name="link"
         type="url"
