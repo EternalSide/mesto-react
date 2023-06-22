@@ -1,15 +1,35 @@
-import React from "react";
+import { useRef } from "react";
 
-const PopupWithForm = (props) => {
+const PopupWithForm = ({
+  children,
+  isOpen,
+  name,
+  onClose,
+  title,
+  onSubmit,
+  isLoading,
+}) => {
+  const popupRef = useRef();
+
   return (
-    <div className={props.isOpen ? `popup popup_type_${props.name} popup_opened` : `popup popup_type_${props.name}`}>
-      <div className="popup__container">
-        <button type="button" className="popup__close" onClick={props.close}></button>
-        <h2 className="popup__red">{props.title}</h2>
-        <form action="form.php" className="popup__form" name={props.name} noValidate onSubmit={props.onSubmit}>
-          {props.children}
+    <div
+      className={
+        isOpen ? `popup popup_type_${name} popup_opened` : `popup popup_type_${name}`
+      }
+    >
+      <div className="popup__container" ref={popupRef}>
+        <button type="button" className="popup__close" onClick={onClose}></button>
+        <h2 className="popup__red">{title}</h2>
+        <form
+          action="form.php"
+          className="popup__form"
+          name={name}
+          noValidate
+          onSubmit={onSubmit}
+        >
+          {children}
           <button type="submit" className="popup__button">
-            Сохранить
+            {isLoading ? "Сохраняю.." : "Сохранить"}
           </button>
         </form>
       </div>

@@ -1,4 +1,4 @@
- class Api {
+class Api {
   constructor(options) {
     this._baseUrl = options.baseUrl;
     this.headers = options.headers;
@@ -32,7 +32,7 @@
       method: "PATCH",
       headers: this.headers,
       body: JSON.stringify({
-        avatar: data.link,
+        avatar: data,
       }),
     }).then(this._checkRes);
   }
